@@ -1,0 +1,23 @@
+# Fichiers et dossiers générés automatiquement par NetBeans
+nbproject/private/
+build/
+dist/
+*.class
+*.jar
+*.war
+*.log
+
+# Configuration de l'IDE
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Systèmes d'exploitation
+.DS_Store
+Thumbs.db
+
+# Fichiers personnels
+*.pdf
+*.sql
+
