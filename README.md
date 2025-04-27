@@ -61,7 +61,7 @@ Développer une application de gestion de stock avec interface graphique en **Ja
 ![fenetre consultant](images/fenetreconsultant.png)
 
     ## 🧪fenetre commande
-![fenetre commande](images/fentrecommande.png)
+![fenetre commande](images/fenetrecommande.png)
 
     ## 🧪Gestion clients
 ![Gestion clients](images/gestionclient.png)
