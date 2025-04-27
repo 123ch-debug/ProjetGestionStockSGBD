@@ -46,7 +46,37 @@ Développer une application de gestion de stock avec interface graphique en **Ja
 
 ## 🧪 Capture d’écran
 
+     ## 🧪Authentification
+
 ![Authentification1](images/authentification.png)
+![Authentification2](images/Capture.JPG)
+
+    ## 🧪Fenêtre admin
+![fenetre admin](images/fenetreadmin.png)
+
+    ## 🧪fenetre gerant
+![fenetre gerant](images/fenetregerant.png)
+
+    ## 🧪fenetre consultant
+![fenetre consultant](images/fenetreconsultant.png)
+
+    ## 🧪fenetre commande
+![fenetre commande](images/fentrecommande.png)
+
+    ## 🧪Gestion clients
+![Gestion clients](images/gestionclient.png)
+
+    ## 🧪Gestion des parametres
+![Gestion des parametres](images/gestiondesparametres.png)
+
+    ## 🧪Gestion du stock
+![Gestion du stock](images/gestiondustock.png)
+
+    ## 🧪Gestion des utilisateurs
+![Gestion des utilisateurs](images/gestionutilisateurs.png)
+
+    ## 🧪Gestion des ventes
+![Gestion des ventes](images/gestionvente.png)
 
 ## 🔧 Lancer le projet
 
