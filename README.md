@@ -1,6 +1,6 @@
 # Application de Gestion de Stock avec Base de Données - Java Swing & SGBD
 
-Projet réalisé dans le cadre du module de **Systèmes de Gestion de Bases de Données**.
+Projet réalisé dans le cadre du module de **Projet de Developpement SGBD**.
 
 ## 🎯 Objectif
 Développer une application de gestion de stock avec interface graphique en **Java Swing** connectée à une base de données via **NetBeans**,
