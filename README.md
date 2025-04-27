@@ -1,25 +1,24 @@
-# Projet SGBD - Gestion de Stock
+# Application de Gestion de Stock avec Base de Données - Java Swing & SGBD
 
-Ce projet a été réalisé dans le cadre du module **Systèmes de Gestion de Bases de Données (SGBD)**.
+Projet réalisé dans le cadre du module de **Systèmes de Gestion de Bases de Données**.
 
 ## 🎯 Objectif
-Développer une application de gestion de stock avec interface graphique en **Java** via **NetBeans**,
-s'appuyant sur une **base de données MySQL**. L'application permet de gérer :
+Développer une application de gestion de stock avec interface graphique en **Java Swing** connectée à une base de données via **NetBeans**,
+ L'application permet : 
 
-- Les utilisateurs
-- Les clients
-- Les articles
-- Les commandes
-- Les ventes
-- Les paramètres systèmes
+-Gestion des clients
+- Gestion des utilisateurs (avec différents privilèges)
+- Gestion des stocks
+- Gestion des ventes et commandes
+- Gestion des paramètres de connexion à la base de données
 
 ## 🛠️ Technologies utilisées
 
-- Java (Swing)
+- Java Swing (interface graphique)
+- Connexion JDBC
+- Base de données MySQL
+- iText pour la génération de factures PDF
 - NetBeans IDE
-- MySQL
-- JDBC
-- IText pour génération de PDF
 - JBCrypt pour cryptage de mot de passe
 
 ## ▶️ Fonctionnalités principales
@@ -30,6 +29,21 @@ s'appuyant sur une **base de données MySQL**. L'application permet de gérer :
 - Interface utilisateur intuitive
 - Connexion sécurisée à la base de données
 
+## 🧩 Architecture
+- **Controle** : gestion des actions utilisateur
+- **Images** : ressources graphiques
+- **Modele** : classes métiers (Client, Stock, Commande, etc.)
+- **Ressources** : fichiers de configuration
+- **Utils** : utilitaires (génération PDF)
+- **Vue** : fenêtres graphiques
+
+## 📸 Aperçu de l'application
+- Connexion utilisateur
+- Tableau de gestion des clients
+- Interface de gestion des utilisateurs
+- Gestion du stock
+- Gestion des ventes
+
 ## 🧪 Capture d’écran
 
 Ajoutez ici une capture (ex. `![Aperçu](images/capture.jpg)`)
@@ -38,9 +52,15 @@ Ajoutez ici une capture (ex. `![Aperçu](images/capture.jpg)`)
 
 1. Ouvrir le projet avec **NetBeans**.
 2. S'assurer que le **serveur MySQL** est en marche.
-3. Importer le script SQL (si présent) dans votre base de données.
+3. Importer le script SQL : charger sur le  Serveur MySQL/MariaDB  la base de données `Gestion_stock`
 4. Modifier les informations de connexion dans `Configuration.java` si nécessaire.
-5. Exécuter le fichier `FenetreConnexion.java`.
+5. Connexion internet pour téléchargement éventuel des librairies (iText, JDBC drivers)
+6. Exécuter le fichier `FenetreConnexion.java`.
+
+## 💡 Informations importantes
+- Les privilèges limitent les fonctionnalités accessibles aux utilisateurs.
+- Les commandes peuvent être modifiées tant qu'elles ne sont pas clôturées.
+
 
 ## 💡 Auteur
 

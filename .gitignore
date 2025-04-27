@@ -1,23 +1,22 @@
-# Fichiers et dossiers générés automatiquement par NetBeans
-nbproject/private/
-build/
-dist/
+# Ignorer les fichiers compilés
 *.class
-*.jar
-*.war
+
+# Ignorer le dossier build
+build/
+
+# Ignorer le dossier dist
+dist/
+
+# Ignorer les fichiers NetBeans privés
+nbproject/private/
+
+# Ignorer les fichiers temporaires
 *.log
+*.bak
 
-# Configuration de l'IDE
-*.iml
-*.ipr
-*.iws
-.idea/
-
-# Systèmes d'exploitation
+# Fichiers système
 .DS_Store
 Thumbs.db
 
-# Fichiers personnels
-*.pdf
-*.sql
-
+# Fichiers jar générés
+*.jar
