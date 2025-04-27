@@ -1,0 +1,259 @@
+/*DROP DATABASE IF EXISTS Gestion_stock;*/
+SET NAMES utf8;
+
+CREATE DATABASE Gestion_stock CHARACTER SET 'utf8';
+USE Gestion_stock;
+
+
+DROP TABLE IF EXISTS Adresse;
+
+CREATE TABLE Adresse (
+    id_adresse INT NOT NULL AUTO_INCREMENT,
+    num_rue    INT NOT NULL,
+    nom_rue    VARCHAR(50) NOT NULL,
+    localite   VARCHAR(50),
+    pays       VARCHAR(50),
+    code_postal VARCHAR(20),
+	CONSTRAINT Adresse_id_adresse_pk PRIMARY KEY (id_adresse)
+) ENGINE=InnoDB CHARSET=latin1;
+
+/*INSERT INTO Adresse (num_rue, nom_rue, localite, pays, code_postal) VALUES
+    (1, 'Rue Royale', 'Bruxelles', 'Belgique', '1000'),
+    (2, 'Avenue Louise', 'Ixelles', 'Belgique', '1050'),
+    (3, 'Rue Neuve', 'Liège', 'Belgique', '4000'),
+    (4, 'Rue de Rivoli', 'Paris', 'France', '75001'),
+    (5, 'Avenue des Champs-Élysées', 'Paris', 'France', '75008'),
+    (6, 'Rue du Rhône', 'Genève', 'Suisse', '1204'),
+    (7, 'Avenue de la Gare', 'Lausanne', 'Suisse', '1003'),
+    (8, 'Rue des Capucins', 'Luxembourg', 'Luxembourg', '1313'),
+    (9, 'Boulevard Royal', 'Luxembourg', 'Luxembourg', '2449');*/
+	
+
+CREATE TABLE Type_Paiement
+(
+    id_paiement                 INTEGER NOT NULL AUTO_INCREMENT,
+	mode_paiement				VARCHAR(20),
+    CONSTRAINT Type_Paiement_id_paiement_pk PRIMARY KEY (id_paiement)
+) ENGINE = InnoDB DEFAULT CHARACTER SET = latin1;
+INSERT INTO Type_Paiement (mode_paiement) VALUES ('Cash'), ('Carte');
+
+
+CREATE TABLE Categorie(
+	id					INTEGER NOT null ,
+	designation 		VARCHAR(30),
+	CONSTRAINT Categorie_id_pk PRIMARY KEY (id)
+
+) ENGINE=InnoDB CHARSET=latin1;
+
+INSERT INTO Categorie(id, designation) VALUES
+    (1, 'Peinture & decoration' ),
+    (2, 'Outils & equipements' ),
+    (3, 'Quincaillerie' ),
+    (4, 'Plomberie & sanitaires' ),
+    (5, 'Electricite & eclairage' ),
+    (6, 'Jardinage & exterieur' ),
+    (7, 'Bois & materiaux' ),
+    (8, 'Chauffage & climatisation' );
+
+	
+
+CREATE TABLE Privilege 
+(
+    id_privilege               	INT NOT NULL,
+    description           		VARCHAR(20),	
+   
+    CONSTRAINT Privilege_id_privilege_pk PRIMARY KEY (id_privilege)
+) ENGINE = InnoDB DEFAULT CHARACTER SET = latin1;
+
+INSERT INTO Privilege (id_privilege, description) VALUES
+    (1, 'Admin'),
+    (2, 'Gerant'),
+    (3, 'Utilisateur');
+	
+	
+
+CREATE TABLE Client(
+	id_client 				INTEGER NOT NULL AUTO_INCREMENT,
+	nom 					VARCHAR(15) NOT NULL,
+	prenom	 				VARCHAR(15) NOT NULL,
+	email 					VARCHAR(30),
+	carte_fidelite 			BOOLEAN DEFAULT FALSE,
+	id_adresse				INT NOT NULL,
+	CONSTRAINT Client_id_client_pk PRIMARY KEY (id_client),
+	CONSTRAINT fk_Client FOREIGN KEY (id_adresse) REFERENCES Adresse (id_adresse),
+	UNIQUE INDEX ind_uni_email (email)
+) ENGINE=InnoDB CHARSET=latin1;
+
+CREATE TABLE Users
+(
+    id_user                	INT NOT NULL AUTO_INCREMENT,
+    username           		VARCHAR(45),	
+    password          		VARCHAR(255),
+	statut 					ENUM('actif', 'inactif') DEFAULT 'actif',
+	id_privilege 			INT NOT NULL,
+    CONSTRAINT Users_id_user_pk PRIMARY KEY (id_user),
+	CONSTRAINT fk_Users_id_privilege FOREIGN KEY (id_privilege) REFERENCES Privilege (id_privilege)
+) ENGINE = InnoDB DEFAULT CHARACTER SET = latin1;
+
+INSERT INTO Users (username, password, id_privilege) VALUES
+    ('admin', '$2a$10$7z0F5GBnb6gzo0QrX.JzbOQR99nrEuT47W3O6hGlnf2o.l8lir6uy', 1);        
+    /*('consultant1', 'pass123', 2), 
+    ('user1', 'simplepass', 3),      
+    ('consultant2', 'password2', 2),
+    ('user2', 'mypassword', 3); */ 
+
+
+
+CREATE TABLE Employe (
+	id_employe	 			INTEGER NOT NULL AUTO_INCREMENT,
+	prenom      			VARCHAR(20),
+	nom 					VARCHAR(20)	NOT NULL,
+	titre           		VARCHAR(60),
+	salaire         		DECIMAL(6,2),
+	pct_commission  		DECIMAL(4,2),
+	id_user 				INT NOT NULL,
+	id_adresse				INT NOT NULL,
+	CONSTRAINT Employe_id_employe_pk PRIMARY KEY (id_employe),
+	CONSTRAINT fk_Employe FOREIGN KEY (id_adresse) REFERENCES Adresse (id_adresse),
+	CONSTRAINT fk_Employe_id_user FOREIGN KEY (id_user) REFERENCES Users (id_user)
+) ENGINE=InnoDB CHARSET=latin1;	
+
+/*INSERT INTO Employe (id_employe, prenom, nom, titre, salaire, pct_commission, num_rue, nom_rue, id_user) VALUES
+    (1, 'Alice', 'Dupont', 'Directrice Générale', 7500.00, 5.00, 1, 'Rue Royale', 1);
+    /*(2, 'Bob', 'Martin', 'Consultant Senior', 4500.00, 3.50, 2, 'Avenue Louise', 2),
+    (3, 'Charlie', 'Durand', 'Analyste', 3200.00, 0.00, 3, 'Rue Neuve', 3),
+    (4, 'Diane', 'Moreau', 'Consultante Junior', 2800.00, 2.00, 4, 'Rue de Rivoli', 2),
+    (5, 'Ethan', 'Lambert', 'Comptable', 3500.00, 1.00, 5, 'Avenue des Champs-Élysées', 3),
+    (6, 'Fanny', 'Girard', 'Responsable des Ventes', 5000.00, 4.00, 6, 'Rue du Rhône', 2),
+    (7, 'Georges', 'Bernard', 'Ingénieur IT', 4700.00, 0.00, 7, 'Avenue de la Gare', 1);*/
+	
+	CREATE TABLE Commande (
+    id_commande        INTEGER NOT NULL AUTO_INCREMENT,
+    date_commande      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    statut             ENUM('En cours', 'clôturé','Annulée') DEFAULT 'En cours',
+    id_client          INTEGER NOT NULL,
+    id_employe         INTEGER NOT NULL,
+    CONSTRAINT Commande_id_commande_pk PRIMARY KEY (id_commande),
+    CONSTRAINT fk_Commande_id_client FOREIGN KEY (id_client) REFERENCES Client (id_client),
+    CONSTRAINT fk_Commande_id_employe FOREIGN KEY (id_employe) REFERENCES Employe (id_employe)
+) ENGINE = InnoDB DEFAULT CHARACTER SET = latin1;
+
+
+
+
+CREATE TABLE Stock(
+	id_stock							INTEGER NOT NULL AUTO_INCREMENT,
+	designation 						VARCHAR(30),
+	quantite_stock						INTEGER,
+	code_barres 						INTEGER,
+	prix_unitaire 						DECIMAL(7,2),
+	taux_tva            				DECIMAL(7,2),
+	id_categorie						INTEGER NOT NULL,
+	CONSTRAINT Stock_id_stock_pk PRIMARY KEY (id_stock),
+	CONSTRAINT fk_id_categorie_Stock FOREIGN KEY(id_categorie) REFERENCES Categorie(id)
+
+) ENGINE=InnoDB CHARSET=latin1;
+
+
+INSERT INTO Stock (designation, quantite_stock, code_barres, prix_unitaire, taux_tva, id_categorie) VALUES
+-- Peinture & décoration (id_categorie = 1)
+('Peinture acrylique blanche 10L', 50, 1000001, 45.99, 20.00, 1),
+('Papier peint motif floral', 30, 1000002, 19.99, 20.00, 1),
+('Brosse à peinture premium', 100, 1000003, 5.99, 20.00, 1),
+('Ruban de masquage 50m', 200, 1000004, 3.49, 20.00, 1),
+('Pistolet à peinture électrique', 15, 1000005, 89.99, 20.00, 1),
+
+-- Outils & équipements (id_categorie = 2)
+('Perceuse-visseuse sans fil 18V', 25, 1000006, 129.99, 20.00, 2),
+('Marteau anti-vibrations 500g', 80, 1000007, 14.99, 20.00, 2),
+('Clé à molette ajustable 30cm', 60, 1000008, 9.99, 20.00, 2),
+('Scie circulaire 1200W', 20, 1000009, 79.99, 20.00, 2),
+('Mètre ruban 5m', 150, 1000010, 7.49, 20.00, 2),
+
+-- Quincaillerie (id_categorie = 3)
+('Vis à bois 4x40mm (100 pièces)', 300, 1000011, 4.99, 20.00, 3),
+('Charnières en acier inoxydable (lot de 2)', 120, 1000012, 6.99, 20.00, 3),
+('Équerre de fixation 100x100mm', 100, 1000013, 3.99, 20.00, 3),
+('Cadenas en laiton 40mm', 50, 1000014, 12.99, 20.00, 3),
+('Chevilles universelles 8mm (lot de 50)', 200, 1000015, 5.49, 20.00, 3),
+
+-- Plomberie & sanitaires (id_categorie = 4)
+('Robinet mitigeur salle de bain chromé', 40, 1000016, 39.99, 20.00, 4),
+('Flexible de douche 1,5m en inox', 75, 1000017, 14.99, 20.00, 4),
+('WC suspendu avec réservoir encastré', 10, 1000018, 199.99, 20.00, 4),
+('Siphon de lavabo en PVC', 100, 1000019, 8.99, 20.00, 4),
+('Chauffe-eau électrique 50L', 15, 1000020, 249.99, 20.00, 4),
+
+-- Électricité & éclairage (id_categorie = 5)
+('Ampoule LED E27 10W lumière blanche', 200, 1000021, 3.99, 20.00, 5),
+('Prise murale double avec terre', 100, 1000022, 7.99, 20.00, 5),
+('Interrupteur tactile rétroéclairé', 50, 1000023, 19.99, 20.00, 5),
+('Câble électrique 3G1.5mm² (100m)', 30, 1000024, 49.99, 20.00, 5),
+('Spot encastrable LED 5W', 80, 1000025, 14.99, 20.00, 5),
+
+-- Jardinage & extérieur (id_categorie = 6)
+('Tondeuse à gazon thermique 1500W', 10, 1000026, 299.99, 20.00, 6),
+('Tuyau d’arrosage extensible 30m', 50, 1000027, 24.99, 20.00, 6),
+('Sac de terreau universel 50L', 100, 1000028, 9.99, 20.00, 6),
+('Râteau en acier 16 dents', 75, 1000029, 17.99, 20.00, 6),
+('Engrais naturel pour potager 5kg', 60, 1000030, 11.99, 20.00, 6),
+
+-- Bois & matériaux (id_categorie = 7)
+('Panneau MDF 18mm 250x122cm', 25, 1000031, 45.99, 20.00, 7),
+('Parquet stratifié chêne clair', 50, 1000032, 29.99, 20.00, 7),
+('Colle à bois PU 500ml', 80, 1000033, 6.99, 20.00, 7),
+('Chevrons en sapin 63x75mm (3m)', 40, 1000034, 14.99, 20.00, 7),
+('Plinthe blanche en bois 10cm', 90, 1000035, 7.99, 20.00, 7),
+
+-- Chauffage & climatisation (id_categorie = 8)
+('Radiateur électrique à inertie 1000W', 20, 1000036, 149.99, 20.00, 8),
+('Climatiseur mobile réversible', 15, 1000037, 399.99, 20.00, 8),
+('Poêle à granulés 8kW', 10, 1000038, 799.99, 20.00, 8),
+('Ventilateur colonne silencieux', 50, 1000039, 59.99, 20.00, 8),
+('Thermostat programmable connecté', 30, 1000040, 89.99, 20.00, 8);
+
+
+
+CREATE TABLE Ticket_Caisse
+(
+    id_ticket_caisse                INTEGER NOT NULL AUTO_INCREMENT,
+    date_ticket         			TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    statut              			VARCHAR(45) DEFAULT 'Non payé',
+    id_employe          			INT NOT NULL,
+	id_client           			INTEGER NOT NULL, 
+	id_commande 					INTEGER NOT NULL,
+    CONSTRAINT Ticket_Caisse_id_ticket_caisse_pk PRIMARY KEY (id_ticket_caisse),
+    CONSTRAINT fk_Ticket_Caisse_id_client FOREIGN KEY (id_client) REFERENCES Client (id_client),
+    CONSTRAINT fk_Ticket_Caisse_id_employe FOREIGN KEY (id_employe) REFERENCES Employe (id_employe),
+	CONSTRAINT fk_Ticket_Caisse_id_commande FOREIGN KEY (id_commande) REFERENCES Commande (id_commande)
+) ENGINE = InnoDB DEFAULT CHARACTER SET = latin1;
+
+CREATE TABLE est_lie (
+    id_ticket_caisse 			INTEGER NOT NULL ,
+    id_paiement                 INTEGER NOT NULL,
+    montant 					DECIMAL(10, 2),
+    CONSTRAINT pk_est_lie PRIMARY KEY (id_ticket_caisse, id_paiement),
+	CONSTRAINT fk_est_lie_id_ticket_caisse FOREIGN KEY (id_ticket_caisse) REFERENCES Ticket_Caisse (id_ticket_caisse),
+	CONSTRAINT fk_est_lie_id_paiement FOREIGN KEY ( id_paiement) REFERENCES Type_Paiement ( id_paiement)
+	
+)ENGINE = InnoDB DEFAULT CHARACTER SET = latin1; 
+
+CREATE TABLE Commande_Stock (
+    id_commande      INTEGER NOT NULL,
+    id_stock        INTEGER NOT NULL,
+    quantite_achetee INTEGER NOT NULL,
+    prix_unitaire   DECIMAL(10, 2) NOT NULL,
+    CONSTRAINT pk_Commande_Article PRIMARY KEY (id_commande, id_stock),
+    CONSTRAINT fk_Commande_Article_id_commande FOREIGN KEY (id_commande) REFERENCES Commande (id_commande),
+    CONSTRAINT fk_Commande_Article_id_stock FOREIGN KEY (id_stock) REFERENCES Stock (id_stock)
+) ENGINE = InnoDB DEFAULT CHARACTER SET = latin1;
+
+
+
+CREATE TABLE Erreurs
+(
+    id                  SMALLINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    date_heure          TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    message             VARCHAR(255)
+) ENGINE=InnoDB DEFAULT CHARACTER SET = latin1;
+
