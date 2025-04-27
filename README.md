@@ -46,7 +46,7 @@ Développer une application de gestion de stock avec interface graphique en **Ja
 
 ## 🧪 Capture d’écran
 
-Ajoutez ici une capture (ex. `![Aperçu](images/capture.jpg)`)
+![Authentification1](images/authentification.png)
 
 ## 🔧 Lancer le projet
 
