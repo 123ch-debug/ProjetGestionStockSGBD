@@ -21,6 +21,21 @@ Développer une application de gestion de stock avec interface graphique en **Ja
 - NetBeans IDE
 - JBCrypt pour cryptage de mot de passe
 
+📦 Téléchargement rapide
+Pour plus de simplicité, le projet complet est également disponible au téléchargement sous forme d'archive .zip.
+
+👉 Lien direct : [Télécharger le projet .zip](https://github.com/123ch-debug/ProjetGestionStockSGBD/releases/latest)
+
+Une fois téléchargé, il suffit de :
+
+Extraire l'archive.
+
+Importer le projet dans NetBeans (ou un autre IDE Java).
+
+Suivre les instructions du README pour configurer la base de données.
+
+
+
 ## ▶️ Fonctionnalités principales
 
 - Authentification utilisateur
